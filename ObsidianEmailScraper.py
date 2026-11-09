@@ -61,7 +61,10 @@ def main():
     note_content = ''
 
     for email_id in email_ids:
-        subject, from_, date, body = extract_email_content(mail, email_id)
+        result = extract_email_content(mail, email_id)
+        if result is None:   # e.g. an email with only HTML or attachments
+            continue
+        subject, from_, date, body = result
         if subject:
             note_content += f'## {subject}\n'
             note_content += f'- From: {from_}\n'
